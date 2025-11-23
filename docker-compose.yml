@@ -1,0 +1,66 @@
+# DOCKER COMPOSE - AUTOR: DAVID H. CUEVAS SALGADO
+
+services:
+  jenkins:
+    build: ./jenkins
+    container_name: jenkins-server
+    privileged: true
+    user: root
+    ports:
+      - "8082:8080"
+      - "50002:50000"
+    volumes:
+      - ./jenkins/jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - devsecops-net
+
+  owasp-zap:
+    image: zaproxy/zap-stable
+    container_name: owasp-zap
+    ports:
+      - "8090:8090"
+    command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+    networks:
+      - devsecops-net
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./grafana/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - devsecops-net
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    networks:
+      - devsecops-net
+
+  app:
+    build: ./app
+    container_name: vulnerable-app
+    ports:
+      - "3000:3000"
+    networks:
+      - devsecops-net
+
+networks:
+  devsecops-net:
+    driver: bridge
+
+volumes:
+  grafana-storage:

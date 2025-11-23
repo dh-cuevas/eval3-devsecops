@@ -1,0 +1,18 @@
+# PROMETHEUS CONFIG - AUTOR: DAVID H. CUEVAS SALGADO
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: "jenkins"
+    metrics_path: "/prometheus"
+    static_configs:
+      - targets: ["jenkins:8080"]
+
+  - job_name: "app"
+    static_configs:
+      - targets: ["app:3000"]
