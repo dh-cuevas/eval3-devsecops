@@ -67,12 +67,12 @@ pipeline {
                     sh "docker run -d --name test-app --network eval3-devsecops_devsecops-net -p 3002:3000 ${DOCKER_IMAGE}"
                     sleep(time: 10, unit: "SECONDS")
                     
-                    sh @"
+                    sh """
                         docker run --rm --network eval3-devsecops_devsecops-net \
                         zaproxy/zap-stable zap-baseline.py \
                         -t http://test-app:3000 \
                         -r zap-report.html || true
-"@
+                    """
                     
                     sh "docker stop test-app && docker rm test-app"
                 }
@@ -87,13 +87,13 @@ pipeline {
                     sh "docker stop vulnerable-app || true"
                     sh "docker rm vulnerable-app || true"
                     
-                    sh @"
+                    sh """
                         docker run -d \
                         --name vulnerable-app \
                         --network eval3-devsecops_devsecops-net \
                         -p 3000:3000 \
                         ${DOCKER_IMAGE}
-"@
+                    """
                     
                     echo "Aplicación desplegada en http://localhost:3000"
                 }
