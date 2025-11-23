@@ -1,0 +1,13 @@
+# DEPENDABOT CONFIG - AUTOR: DAVID H. CUEVAS SALGADO
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/app"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "dh-cuevas"
+    labels:
+      - "dependencies"
+      - "security"
