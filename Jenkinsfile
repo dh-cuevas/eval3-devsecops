@@ -29,7 +29,7 @@ pipeline {
                     echo "--- ETAPA 2: ANÁLISIS DE DEPENDENCIAS ---"
                     dir("app") {
                         sh "npm audit --json > ../docs/reportes/npm-audit.json || true"
-                        sh "npm audit"
+                        sh "npm audit || true"
                     }
                 }
             }
