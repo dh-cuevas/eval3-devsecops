@@ -38,8 +38,8 @@
              steps {
                  script {
                      echo "--- ETAPA 3: START SERVICE ---"
-                     sh "docker-compose up -d app"
-                     sh "docker-compose ps > compose_ps.txt"
+                     sh "docker compose up -d app"
+                     sh "docker compose ps > compose_ps.txt"
                  }
              }
          }
