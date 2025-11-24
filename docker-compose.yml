@@ -1,5 +1,7 @@
 # DOCKER COMPOSE - AUTOR: DAVID H. CUEVAS SALGADO
 
+version: "3.8"
+
 services:
   jenkins:
     build: ./jenkins
@@ -22,7 +24,11 @@ services:
     container_name: owasp-zap
     ports:
       - "8090:8090"
-    command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.disablekey=true -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true
+    command: >
+      zap.sh -daemon -host 0.0.0.0 -port 8090
+      -config api.disablekey=true
+      -config api.addrs.addr.name=.*
+      -config api.addrs.addr.regex=true
     networks:
       - devsecops-net
 
@@ -50,19 +56,11 @@ services:
     networks:
       - devsecops-net
 
-  node-exporter:
-    image: prom/node-exporter:latest
-    container_name: node-exporter
-    ports:
-      - "9100:9100"
-    networks:
-      - devsecops-net
-
   app:
     build: ./app
     container_name: vulnerable-app
     ports:
-      - "3000:3000"
+      - "5000:5000"
     networks:
       - devsecops-net
 
