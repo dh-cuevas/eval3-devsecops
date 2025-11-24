@@ -3,7 +3,6 @@
 services:
   jenkins:
     build: ./jenkins
-    container_name: jenkins-server
     privileged: true
     user: root
     ports:
@@ -19,7 +18,6 @@ services:
 
   owasp-zap:
     image: zaproxy/zap-stable
-    container_name: owasp-zap
     ports:
       - "8090:8090"
     command: >
@@ -32,7 +30,6 @@ services:
 
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
     ports:
       - "9090:9090"
     volumes:
@@ -44,7 +41,6 @@ services:
 
   grafana:
     image: grafana/grafana:latest
-    container_name: grafana
     ports:
       - "3001:3000"
     environment:
@@ -56,9 +52,8 @@ services:
 
   app:
     build: ./app
-    container_name: vulnerable-app
     ports:
-      - "5000:5000"
+      - "5050:5000"
     networks:
       devsecops-net:
         aliases:
