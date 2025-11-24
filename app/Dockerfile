@@ -1,13 +1,23 @@
-# DOCKERFILE - AUTOR: DAVID H. CUEVAS SALGADO
-FROM node:14-alpine
+FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY package*.json ./
-RUN npm install
+# Instalar SQLite
+RUN apt-get update && apt-get install -y --no-install-recommends sqlite3 \
+    && rm -rf /var/lib/apt/lists/*
 
+# Copiar dependencias e instalarlas
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copiar todo el código de la aplicación
 COPY . .
 
-EXPOSE 3000
+# Crear la base de datos en el build
+RUN python create_db.py
 
-CMD ["npm", "start"]
+# Exponer el puerto de Flask
+EXPOSE 5000
+
+# Ejecutar la aplicación vulnerable
+CMD ["python", "vulnerable_flask_apo.py"]
