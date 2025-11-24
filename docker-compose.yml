@@ -1,7 +1,5 @@
 # DOCKER COMPOSE - AUTOR: DAVID H. CUEVAS SALGADO
 
-version: "3.8"
-
 services:
   jenkins:
     build: ./jenkins
@@ -62,7 +60,9 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - devsecops-net
+      devsecops-net:
+        aliases:
+          - app
 
 networks:
   devsecops-net:

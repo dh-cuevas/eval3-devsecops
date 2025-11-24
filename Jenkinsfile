@@ -8,7 +8,7 @@ pipeline {
     environment {
         APP_NAME = "vulnerable-app"
         DOCKER_IMAGE = "${APP_NAME}:${BUILD_NUMBER}"
-        APP_URL = "http://app:5000"
+        APP_URL = "http://vulnerable-app:5000"
     }
     
     stages {
