@@ -2,8 +2,12 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-# Instalar SQLite
-RUN apt-get update && apt-get install -y --no-install-recommends sqlite3 \
+# Instalar SQLite y dependencias necesarias para compilar mysqlclient
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    sqlite3 \
+    gcc \
+    pkg-config \
+    default-libmysqlclient-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Copiar dependencias e instalarlas
