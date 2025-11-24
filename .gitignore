@@ -1,0 +1,8 @@
+# Ignorar archivos sensibles y temporales
+.env
+node_modules/
+npm-debug.log
+*.log
+*.tmp
+.DS_Store
+Thumbs.db
