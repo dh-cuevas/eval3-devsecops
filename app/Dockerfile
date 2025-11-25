@@ -24,4 +24,4 @@ RUN python create_db.py
 EXPOSE 5000
 
 # Ejecutar la aplicación vulnerable
-CMD ["python", "vulnerable_flask_apo.py"]
+CMD ["python", "vulnerable_flask_app.py"]
