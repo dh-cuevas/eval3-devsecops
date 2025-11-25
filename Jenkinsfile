@@ -38,7 +38,8 @@ pipeline {
             steps {
                 script {
                     echo "--- ETAPA 3: START SERVICE ---"
-                    sh "docker compose up -d --force-recreate app"
+                    // Levanta todos los servicios para que Jenkins y app compartan red
+                    sh "docker compose up -d --force-recreate"
                     sh "docker compose ps > compose_ps.txt"
                 }
             }
@@ -52,7 +53,6 @@ pipeline {
                     def success = false
                     for (int i = 1; i <= maxRetries; i++) {
                         try {
-                            // Jenkins está en la misma red que app, así puede resolver el alias
                             sh "curl -sS ${APP_URL}"
                             success = true
                             break
