@@ -14,7 +14,9 @@ services:
     environment:
       - DOCKER_HOST=unix:///var/run/docker.sock
     networks:
-      - devsecops-net
+      devsecops-net:
+        aliases:
+          - jenkins
 
   owasp-zap:
     image: zaproxy/zap-stable
@@ -53,7 +55,7 @@ services:
   app:
     build: ./app
     ports:
-      - "5000:5000"   # expone el puerto interno 5000 al host en localhost:5000
+      - "5000:5000"
     networks:
       devsecops-net:
         aliases:
