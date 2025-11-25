@@ -52,6 +52,7 @@ pipeline {
                     def success = false
                     for (int i = 1; i <= maxRetries; i++) {
                         try {
+                            // Jenkins está en la misma red que app, así puede resolver el alias
                             sh "curl -sS ${APP_URL}"
                             success = true
                             break
