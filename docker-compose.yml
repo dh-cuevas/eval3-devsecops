@@ -56,6 +56,8 @@ services:
       - "5000:5000"   # expone el puerto interno 5000 al host en localhost:5000
     networks:
       - devsecops-net
+          aliases:
+            - app
 
 networks:
   devsecops-net:
