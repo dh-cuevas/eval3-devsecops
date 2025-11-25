@@ -52,7 +52,6 @@ services:
 
   app:
     build: ./app
-    container_name: eval3-devsecops-app-1
     ports:
       - "5000:5000"   # expone el puerto interno 5000 al host en localhost:5000
     networks:
